@@ -1,0 +1,187 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title dashboard
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7', crossorigin='anonymous')
+    link(rel='stylesheet', type='text/css', href='https://cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css')
+    link(rel='stylesheet', href='stylesheets/styles.css')
+    script(src='../public/javascripts/main.js')
+    style.
+      #board li {
+      list-style: none;
+      padding: 5px;
+      background: #f5f5f5;
+      border-radius: 5px;
+      margin: 0 0 5px;
+      }
+      #board ul {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 0 0.5%;
+      }
+      #board ul.over {
+      padding-bottom: 55px;
+      background: url('http://www.cufonfonts.com/makeImage.php?width=650&id=1026&size=35&d=y&text=Drop%20Here') center bottom no-repeat #ccc;
+      }
+      #board ul.over li {
+      background: #fff;
+      }
+      h3 {
+      text-align: center;
+      color: black;
+      }
+      h1{
+      text-align: center;
+      }
+      .col-md-4{
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding-bottom: 20px;
+      padding-right: -15px;
+      }
+      .row{
+      padding-top: 20px;
+      padding-bottom: 20px;
+      }
+  body
+    nav.navbar.navbar-inverse.navbar-static-top
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') AdmProyectos
+        #navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='#') Usuarios
+            li
+              a(href='#') Proyectos
+            li.active
+              a(href='#') Dashboard
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='#about')
+                span.glyphicon.glyphicon-user(aria-hidden='true')
+            li
+              a(href='index.jsp') Logout
+        // /.nav-collapse
+    h1 Dashboard de Proyectos
+    .container
+      .row
+        .col-md-1
+          h4 Proyecto:
+        .col-md-3
+          select.form-control
+      div
+        button.btn.btn-primary(type='button', data-toggle='modal', data-target='#modalTareas') Agregar tarea
+      #board
+        .row
+          .col-md-4
+            .col-md-12
+              h3 Inicial
+            .col-md-12
+              ul#inicial
+                if(typeof(tareas) != "undefained")
+                  each item in tareas
+                    li 
+                      div.text
+                        spam #{item.titulo}
+                        a.editar#edit(href='#', data-toggle='modal', data-target='#modalEditTarea') Edit
+                        a.eliminar(align='left', href='#') Delete              
+          .col-md-4
+            .col-md-12
+              h3 En Desarrollo
+            .col-md-12
+              ul
+                li
+          .col-md-4
+            .col-md-12
+              h3 Terminado
+            .col-md-12
+              ul
+                li
+      // Modal Agregar Tarea
+      #modalTareas.modal.fade(tabindex='-1', role='dialog')
+        .modal-dialog(role='document')
+          .modal-content
+            form.edit.hidden(method='post')
+              .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  span(aria-hidden='true') ×
+                h4.modal-title Crear Nueva Tarea
+              .modal-body
+                .form-group
+                  label Titulo: 
+                  input#inputTitulo.form-control(type='text', name='Titulo', placeholder='Titulo de la tarea')
+                .form-group
+                  label Descripción:
+                  textarea#comment.form-control(rows='4', name='Descripcion', placeholder='Descripcion de la tarea')
+                .form-group
+                  label Responsable:
+                  input#inputResponsable.form-control(type='text', name='Responsable', placeholder='Responsable de la tarea')
+                .form-group
+                  label Estado: Inicial
+                .form-group
+                  input#id.form-control(type='hidden', name='id', value='')
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
+                button.btn.btn-primary(type='submit') Crear
+                input(type='hidden', name='opcion', value='1')
+      // Modal Editar Tarea
+      #modalEditTarea.modal.fade(tabindex='-1', role='dialog')
+        .modal-dialog(role='document')
+          .modal-content
+            form(method='post')
+              .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  span(aria-hidden='true') ×
+                h4.modal-title Editar Tarea
+              .modal-body
+                .form-group
+                  label Titulo: 
+                  input#inputTitulo.form-control(type='text', name='Titulo', placeholder='Titulo de la tarea')
+                .form-group
+                  label Descripción:
+                  textarea#comment.form-control(rows='4', name='Descripcion', placeholder='Descripcion de la tarea')
+                .form-group
+                  label Responsable:
+                  input#inputResponsable.form-control(type='text', name='Responsable', placeholder='Responsable de la tarea')
+                .form-group
+                  input#id.form-control(type='hidden', name='id', value='')
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Cancelar
+                button.btn.btn-primary(type='submit') Guardar
+                input(type='hidden', name='opcion', value='1')
+      script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+      script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
+      script(type='text/javascript', src='https://cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.js')
+      script.
+        $(document).ready(function(){
+          console.log("fffffffffffffffff");
+          $('#edit').on('click', function(ev){
+            ev.preventDefault();
+            console.log("hadasasdadasdasdasdasdasdadasdas");
+            var li = $(this).closest('li');
+            li.find('#modalEditTarea').show();
+            
+          })
+
+          $('button.btn.btn-default').on('click', function(ev){
+            ev.preventDefault();
+            var li = $(this).closest('li');
+            li.find('form.edit').hide();
+            li.find('div.text').show();
+          })
+
+          $('button.btn.btn-primary').on('click', function(ev){
+            ev.preventDefault();
+            $(this).closest('form').submit();
+          })
+        })

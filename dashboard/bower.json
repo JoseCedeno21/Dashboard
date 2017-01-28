@@ -1,0 +1,17 @@
+{
+  "name": "dashboard",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "JoseCedeno21 <jose.gabriell.21@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
